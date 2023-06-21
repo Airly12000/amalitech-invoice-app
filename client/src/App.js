@@ -11,17 +11,29 @@ function App() {
 	return (
 		<div>
 			<div className='container-fluid'>
-				<div className='col'>
+				<div className='row'>
 					<SideBar />
-				</div>
-				{openModal && <InvoiceModal />}
-				<div className='col'>
-					<Router>
-						<Routes>
-							<Route exact path='/' element={<Invoices />} />
-							<Route exact path='/invoice/:id' element={<InvoiceDetails />} />
-						</Routes>
-					</Router>
+					{openModal && <InvoiceModal />}
+					<div
+						class='col d-flex flex-column vh-100'
+						style={{ backgroundColor: '#f8f8f8' }}>
+						<div className='row'>
+							<div className='col-md-1 col-lg-2'></div>
+							<div className='col-md col-lg'>
+								<Router>
+									<Routes>
+										<Route exact path='/' element={<Invoices />} />
+										<Route
+											exact
+											path='/invoice/:id'
+											element={<InvoiceDetails />}
+										/>
+									</Routes>
+								</Router>
+							</div>
+							<div className='col-md-1 col-lg-2'></div>
+						</div>
+					</div>
 				</div>
 			</div>
 		</div>
