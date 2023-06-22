@@ -2,45 +2,50 @@ import React from 'react';
 
 function Invoices() {
 	return (
-		<main class='col row overflow-auto mt-lg-4'>
-			<div class='col pt-4'>
+		<main className='col row overflow-auto mt-lg-4'>
+			<div className='col pt-4'>
 				<div className='d-flex flex-row m-3'>
 					<div className='col'>
 						<h2 className='f-w-900'>Invoices</h2>
 						<p className='f-w fs-12'>
-							<span class='d-none d-lg-inline'>There are</span> 7 total invoices
+							<span className='d-none d-lg-inline'>There are</span> 7 total
+							invoices
 						</p>
 					</div>
 					<div className='d-flex align-items-center flex-row-reverse justify-content-evenly'>
-						<button className='rounded-pill newB mx-auto d-flex flex-row align-items-center justify-content-center'>
+						<button
+							className='rounded-pill newB mx-auto d-flex flex-row align-items-center justify-content-center'
+							data-bs-toggle='offcanvas'
+							data-bs-target='#offcanvasExample'
+							aria-controls='offcanvasExample'>
 							<span className='plus rounded-circle me-lg-1 d-flex f-w-900 pt-1 align-items-center justify-content-center'>
 								+
 							</span>
 							<span className='text mx-1'>
-								New <span class='d-none d-lg-inline'>Invoice</span>
+								New <span className='d-none d-lg-inline'>Invoice</span>
 							</span>
 						</button>
-						<div class='dropdown-center me-4 f-w fs-12'>
+						<div className='dropdown-center me-4 f-w fs-12'>
 							<button
-								class='btn dropdown-toggle border border-0'
+								className='btn dropdown-toggle border border-0'
 								data-bs-toggle='dropdown'
 								aria-expanded='false'>
 								<span className='f-w fs-12'>Filter </span>
-								<span class='d-none d-lg-inline f-w fs-12'>by status</span>
+								<span className='d-none d-lg-inline f-w fs-12'>by status</span>
 							</button>
-							<ul class='dropdown-menu dropdown-menu-dark'>
+							<ul className='dropdown-menu dropdown-menu-dark'>
 								<li>
-									<a class='dropdown-item' href='#'>
+									<a className='dropdown-item' href='#'>
 										Action
 									</a>
 								</li>
 								<li>
-									<a class='dropdown-item' href='#'>
+									<a className='dropdown-item' href='#'>
 										Another
 									</a>
 								</li>
 								<li>
-									<a class='dropdown-item' href='#'>
+									<a className='dropdown-item' href='#'>
 										Action
 									</a>
 								</li>
@@ -51,7 +56,7 @@ function Invoices() {
 				<div className='mt-lg-5 f-w fs-12'>
 					<a href='/invoice/1' className='invoice'>
 						<div
-							class='d-flex align-items-md-center flex-md-row justify-content-center card m-3 card-hover position-relative'
+							className='d-flex align-items-md-center flex-md-row justify-content-center card m-3 mx-md-1 mx-lg-2 mx-xl-3 card-hover position-relative border border-0'
 							id='invoiceCard'>
 							<div
 								className='col-md-2 ms-4 ms-md-0 align-self-start align-self-md-center text-center f-w-900 pId'

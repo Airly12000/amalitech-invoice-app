@@ -7,7 +7,7 @@ import Invoices from './pages/Invoices';
 import InvoiceDetails from './pages/InvoiceDetails';
 
 function App() {
-	const [openModal, setOpenModal] = useState(false);
+	const [openModal, setOpenModal] = useState(true);
 	return (
 		<div>
 			<div className='container-fluid'>
@@ -15,7 +15,7 @@ function App() {
 					<SideBar />
 					{openModal && <InvoiceModal />}
 					<div
-						class='col d-flex flex-column vh-100'
+						class='col d-flex flex-column vh-90'
 						style={{ backgroundColor: '#f8f8f8' }}>
 						<div className='row'>
 							<div className='col-md-1 col-lg-2'></div>
