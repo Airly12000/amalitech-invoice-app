@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import './App.css';
 import SideBar from './components/SideBar';
-import InvoiceModal from './components/InvoiceModal';
+import InvoiceCanvas from './components/InvoiceCanvas';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Invoices from './pages/Invoices';
 import InvoiceDetails from './pages/InvoiceDetails';
@@ -13,9 +13,9 @@ function App() {
 			<div className='container-fluid'>
 				<div className='row'>
 					<SideBar />
-					{openModal && <InvoiceModal />}
+					{openModal && <InvoiceCanvas />}
 					<div
-						class='col d-flex flex-column vh-90'
+						class='col d-flex flex-column vh-90 position-relative'
 						style={{ backgroundColor: '#f8f8f8' }}>
 						<div className='row'>
 							<div className='col-md-1 col-lg-2'></div>
