@@ -10,13 +10,11 @@ function App() {
 	const [openModal, setOpenModal] = useState(true);
 	return (
 		<div>
-			<div className='container-fluid'>
+			<div className='container-fluid' id='mainBody'>
 				<div className='row'>
 					<SideBar />
 					{openModal && <InvoiceCanvas />}
-					<div
-						class='col d-flex flex-column vh-90 position-relative'
-						style={{ backgroundColor: '#f8f8f8' }}>
+					<div class='col d-flex flex-column vh-90 position-relative'>
 						<div className='row'>
 							<div className='col-md-1 col-xl-2'></div>
 							<div className='col-md col-lg'>

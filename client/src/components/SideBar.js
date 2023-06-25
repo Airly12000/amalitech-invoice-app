@@ -4,7 +4,44 @@ import Sun from '../assets/images/icon-sun.svg';
 import Moon from '../assets/images/icon-moon.svg';
 
 function SideBar() {
-	const [theme, setTheme] = useState('light');
+	const storedTheme = localStorage.getItem('theme');
+
+	const handleThemeChange = () => {
+		if (activeTheme === 'light') {
+			localStorage.setItem('theme', 'dark');
+			setTheme('dark');
+			setActiveTheme('dark');
+		} else {
+			localStorage.setItem('theme', 'light');
+			setTheme('light');
+			setActiveTheme('light');
+		}
+	};
+
+	const getPreferredTheme = () => {
+		if (storedTheme) {
+			return storedTheme;
+		}
+
+		return window.matchMedia('(prefers-color-scheme: dark)').matches
+			? 'dark'
+			: 'light';
+	};
+
+	const [activeTheme, setActiveTheme] = useState(getPreferredTheme());
+
+	const setTheme = (theme) => {
+		if (
+			theme === 'auto' &&
+			window.matchMedia('(prefers-color-scheme: dark)').matches
+		) {
+			document.body.setAttribute('theme', 'dark');
+		} else {
+			document.body.setAttribute('theme', activeTheme);
+		}
+	};
+
+	setTheme(getPreferredTheme());
 	return (
 		<nav class='d-flex sticky-top' id='sidebar'>
 			<div class='d-flex flex-lg-column flex-row align-items-center align-items-lg-start px-3 pt-2 text-white position-relative w-100'>
@@ -38,11 +75,9 @@ function SideBar() {
 							type='button'
 							className='bg-transparent border border-0 col ms-2 justify-content-center align-items-center d-flex pb-2 border'
 							id='sun-moon'
-							onClick={() =>
-								theme === 'light' ? setTheme('dark') : setTheme('light')
-							}>
+							onClick={handleThemeChange}>
 							<img
-								src={theme === 'light' ? Moon : Sun}
+								src={activeTheme === 'light' ? Moon : Sun}
 								alt='sun-moon'
 								width='20'
 								height='20'

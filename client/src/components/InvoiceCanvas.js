@@ -42,12 +42,12 @@ function InvoiceCanvas() {
 					<span className='f-w fs-12 ms-2 col-black'>Go back</span>
 				</a>
 				<h5
-					class='offcanvas-title w-100 f-w pt-4 ps-2 col-black'
+					class='offcanvas-title w-100 f-w pt-4 ps-3 mb-1 col-black'
 					id='offcanvasExampleLabel'>
 					New Invoice
 				</h5>
 			</nav>
-			<div class='offcanvas-body mt-2 fs-12 mb-16 text-color'>
+			<div class='offcanvas-body mt-2 fs-12 mb-16 text-color' id='inputs'>
 				<form className='d-flex flex-column'>
 					<div className='sender d-flex flex-column'>
 						<span className='mb-3 col-purple'>Bill from</span>
@@ -121,10 +121,11 @@ function InvoiceCanvas() {
 								Email
 							</label>
 							<input
-								type='text'
+								type='email'
 								class='form-control py-3 px-4'
 								name='clientEmail'
 								id='clientEmail'
+								placeholder='e.g. email@example.com'
 								aria-describedby='emailHelp'
 							/>
 						</div>
@@ -295,9 +296,7 @@ function InvoiceCanvas() {
 					</div>
 				</form>
 			</div>
-			<nav
-				className='nav sticky-bottom d-flex py-4 px-4 bg-light'
-				id='canvasFooter'>
+			<nav className='nav sticky-bottom d-flex py-4 px-4' id='canvasFooter'>
 				<div className='d-flex flex-row w-100 justify-content-center'>
 					<div className='text-center me-md-auto'>
 						<button

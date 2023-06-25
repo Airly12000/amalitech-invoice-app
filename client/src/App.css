@@ -3,7 +3,7 @@
 	height: 73px;
 	width: 100%;
 	border-radius: 0 0 0 0;
-	background-color: hsl(231, 20%, 27%);
+	background-color: hsl(233, 31%, 17%);
 }
 
 #logo {
@@ -124,9 +124,9 @@
 	font-weight: 900;
 }
 
-.card {
+/* .card {
 	box-shadow: 0 3px 8px #dfe3fa;
-}
+} */
 
 .pendingButton {
 	color: hsl(34, 100%, 50%);
@@ -206,7 +206,6 @@
 #items {
 	box-shadow: none;
 	width: 100%;
-	background-color: hsl(231, 67%, 99%);
 }
 
 #divAmtDue {
@@ -291,6 +290,7 @@ input::placeholder {
 #itemTotal {
 	font-size: 12px;
 	font-weight: bold;
+	background-color: hsl(233, 31%, 17%);
 }
 
 .priceFont {
@@ -372,4 +372,237 @@ input::placeholder {
 
 #sun-moon:hover img {
 	color: white;
+}
+
+#senderCity,
+#senderStreetAddress,
+#senderPostCode,
+#senderCountry,
+#clientName,
+#clientEmail,
+#clientCity,
+#clientStreetAddress,
+#clientPostCode,
+#clientCountry,
+#invoiceDate,
+#paymentTerms,
+#projectDescription,
+#itemName,
+#itemQty,
+#itemPrice,
+#itemTotal {
+	box-shadow: none;
+	transform: border 1s ease;
+}
+
+#senderCity:focus,
+#senderStreetAddress:focus,
+#senderPostCode:focus,
+#senderCountry:focus,
+#clientName:focus,
+#clientEmail:focus,
+#clientCity:focus,
+#clientStreetAddress:focus,
+#clientPostCode:focus,
+#clientCountry:focus,
+#invoiceDate:focus,
+#paymentTerms:focus,
+#projectDescription:focus,
+#itemName:focus,
+#itemQty:focus,
+#itemPrice:focus,
+#itemTotal:focus {
+	border: solid 1px rgb(118, 79, 224);
+}
+
+#inputs {
+	padding: 0 2rem 0 2rem;
+}
+
+/* width */
+#inputs::-webkit-scrollbar {
+	width: 7px;
+}
+
+/* Track */
+#inputs::-webkit-scrollbar-track {
+	background: transparent;
+}
+
+/* Handle */
+#inputs::-webkit-scrollbar-thumb {
+	background: hsl(231, 67%, 93%);
+	border-radius: 5px;
+}
+
+body[theme='light'] {
+	#mainBody {
+		background-color: #f8f8f8;
+	}
+
+	.col-white {
+		color: white;
+	}
+
+	.col-black {
+		color: black;
+	}
+
+	#invoiceCard {
+		background-color: #fff;
+		box-shadow: 0 3px 8px #dfe3fa;
+	}
+
+	#topDetails {
+		background-color: #fff;
+	}
+
+	#mainDetails {
+		background-color: #fff;
+	}
+
+	#items {
+		background-color: hsl(231, 67%, 99%);
+	}
+
+	#divAmntDue {
+		background-color: hsl(231, 20%, 27%);
+	}
+
+	#foot {
+		background-color: #fff;
+	}
+
+	#offcanvasExample {
+		background-color: #fff;
+	}
+
+	#canvasFooter {
+		background-color: #fff;
+	}
+
+	#senderCity,
+	#senderStreetAddress,
+	#senderPostCode,
+	#senderCountry,
+	#clientName,
+	#clientEmail,
+	#clientCity,
+	#clientStreetAddress,
+	#clientPostCode,
+	#clientCountry,
+	#invoiceDate,
+	#paymentTerms,
+	#projectDescription,
+	#itemName,
+	#itemQty,
+	#itemPrice,
+	#itemTotal {
+		background-color: #fff;
+		border: inherit hsl(231, 20%, 61%);
+		color: black;
+	}
+
+	#inputs::-webkit-scrollbar-thumb {
+		background: hsl(231, 67%, 93%);
+	}
+}
+
+body[theme='dark'] {
+	#mainBody {
+		background-color: hsl(231, 30%, 11%);
+	}
+
+	.col-white {
+		color: black;
+	}
+
+	.col-black {
+		color: white;
+	}
+
+	#invoiceCard {
+		background-color: hsl(233, 31%, 17%);
+		box-shadow: none;
+	}
+
+	#topDetails {
+		background-color: hsl(233, 31%, 17%);
+	}
+
+	#mainDetails {
+		background-color: hsl(233, 31%, 17%);
+	}
+
+	#items {
+		background-color: hsl(233, 30%, 21%);
+	}
+
+	#divAmtDue {
+		background-color: hsl(228, 29%, 7%);
+	}
+
+	#foot {
+		background-color: hsl(233, 31%, 17%);
+	}
+
+	#offcanvasExample {
+		background-color: hsl(231, 30%, 11%);
+	}
+
+	#canvasFooter {
+		background-color: hsl(231, 30%, 11%);
+	}
+
+	#senderCity,
+	#senderStreetAddress,
+	#senderPostCode,
+	#senderCountry,
+	#clientName,
+	#clientEmail,
+	#clientCity,
+	#clientStreetAddress,
+	#clientPostCode,
+	#clientCountry,
+	#invoiceDate,
+	#paymentTerms,
+	#projectDescription,
+	#itemName,
+	#itemQty,
+	#itemPrice,
+	#itemTotal {
+		background-color: hsl(233, 31%, 17%);
+		color: white;
+		border: transparent;
+	}
+
+	#projectDescription::placeholder,
+	#clientEmail::placeholder {
+		color: hsl(231, 20%, 61%);
+	}
+
+	#inputs::-webkit-scrollbar-thumb {
+		background: hsl(233, 31%, 17%);
+	}
+
+	#saveDraft {
+		color: white;
+	}
+
+	#saveDraft:hover {
+		background-color: hsl(228, 31%, 17%);
+	}
+
+	#editButton {
+		background-color: hsl(233, 30%, 21%);
+		color: white;
+	}
+
+	#editButton:hover {
+		background-color: hsl(228, 31%, 17%);
+	}
+
+	#variant #editButton:hover {
+		background-color: hsl(233, 30%, 21%);
+	}
 }

@@ -20,7 +20,9 @@ function InvoiceDetails() {
 					</svg>
 					<span className='f-w fs-12 ms-4 col-black'>Go back</span>
 				</a>
-				<div className='d-flex flex-row card my-4 border border-0 py-4 px-4 f-w fs-12'>
+				<div
+					className='d-flex flex-row card my-4 border border-0 py-4 px-4 f-w fs-12'
+					id='topDetails'>
 					<div className='d-flex flex-row align-items-center justify-content-start flex-grow-1'>
 						<span className='me-auto me-md-3 text-color'>Status</span>
 						<span className='d-flex flex-row align-items-center justify-content-center rounded border border-0 pendingButton'>
@@ -32,7 +34,7 @@ function InvoiceDetails() {
 							<span className='fs-12 f-w'>Pending</span>
 						</span>
 					</div>
-					<div className='d-none d-md-block' id='foot'>
+					<div className='d-none d-md-block' id='variant'>
 						<button
 							className='btn btn-secondary border border-0 rounded-pill mx-1'
 							id='editButton'>
@@ -50,7 +52,9 @@ function InvoiceDetails() {
 						</button>
 					</div>
 				</div>
-				<div className='d-flex flex-column card my-4 border border-0 py-3 pt-5 px-5 f-w fs-12'>
+				<div
+					className='d-flex flex-column card my-4 border border-0 py-3 pt-5 px-5 f-w fs-12'
+					id='mainDetails'>
 					<div className='d-flex flex-column flex-md-row w-100 mb-3'>
 						<div className='flex-grow-1 mb-3 mb-md-0'>
 							<div className='col col-black'>
@@ -119,16 +123,19 @@ function InvoiceDetails() {
 						</div>
 						<div
 							className='d-flex flex-row rounded-bottom py-4 px-5 w-100'
-							id='divAmtDue'>
-							<div className='flex-grow-1 col-white'>Amount Due</div>
-							<div className='flex-fill text-end col-white'>$ 1234.00</div>
+							id='divAmtDue'
+							style={{ color: 'white' }}>
+							<div className='flex-grow-1'>Amount Due</div>
+							<div className='flex-fill text-end'>$ 1234.00</div>
 						</div>
 					</div>
 				</div>
 			</div>
-			<nav className='nav sticky-bottom d-flex d-md-none py-4 px-3 bg-footer'>
-				<div className='d-flex fle-row w-100 justify-content-center'>
-					<div className='text-center'>
+			<nav
+				className='nav sticky-bottom d-flex d-md-none py-4 px-3 bg-footer'
+				id='foot'>
+				<div className='d-flex flex-row w-100 justify-content-center'>
+					<div className='text-center' id='variant'>
 						<button
 							className='btn btn-secondary border border-0 rounded-pill mx-1'
 							id='editButton'>
