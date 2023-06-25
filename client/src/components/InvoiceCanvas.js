@@ -39,18 +39,18 @@ function InvoiceCanvas() {
 						}}>
 						<path d='M730.6 18.4l-505.4 505.2 505.4 505.4 144.8-144.8-360.6-360.6 360.6-360.4z'></path>
 					</svg>
-					<span className='f-w fs-12 ms-2'>Go back</span>
+					<span className='f-w fs-12 ms-2 col-black'>Go back</span>
 				</a>
 				<h5
-					class='offcanvas-title w-100 f-w pt-4 ps-2'
+					class='offcanvas-title w-100 f-w pt-4 ps-2 col-black'
 					id='offcanvasExampleLabel'>
 					New Invoice
 				</h5>
 			</nav>
-			<div class='offcanvas-body mt-2 fs-12'>
+			<div class='offcanvas-body mt-2 fs-12 mb-16 text-color'>
 				<form className='d-flex flex-column'>
 					<div className='sender d-flex flex-column'>
-						<span className='mb-3'>Bill from</span>
+						<span className='mb-3 col-purple'>Bill from</span>
 						<div class='mb-3'>
 							<label htmlFor='exampleInputEmail1' class='form-label'>
 								Street Address
@@ -103,7 +103,7 @@ function InvoiceCanvas() {
 						</div>
 					</div>
 					<div className='sender d-flex flex-column mt-4'>
-						<span className='mb-3'>Bill to</span>
+						<span className='mb-3 col-purple'>Bill to</span>
 						<div class='mb-3'>
 							<label htmlFor='exampleInputEmail1' class='form-label'>
 								Name
@@ -287,27 +287,34 @@ function InvoiceCanvas() {
 						})}
 						<button
 							type='button'
-							className='btn btn-secondary rounded-pill mt-1 mb-2'
+							className='btn btn-secondary rounded-pill mt-1 mb-2 border border-0'
+							id='editButton'
 							onClick={handleAddItem}>
 							<span className='f-w fs-12'>+ Add New Item</span>
 						</button>
 					</div>
 				</form>
 			</div>
-			<nav className='nav sticky-bottom d-flex py-2 px-4 bg-transparent bg-gradient'>
+			<nav
+				className='nav sticky-bottom d-flex py-4 px-4 bg-light'
+				id='canvasFooter'>
 				<div className='d-flex flex-row w-100 justify-content-center'>
 					<div className='text-center me-md-auto'>
-						<button className='btn btn-secondary rounded-pill mx-2'>
+						<button
+							className='btn border border-0 rounded-pill mx-2'
+							id='editButton'>
 							<span className='f-w fs-12'>Discard</span>
 						</button>
 					</div>
 					<div className='text-center'>
-						<button className='btn btn-danger rounded-pill mx-2'>
+						<button className='btn rounded-pill mx-2' id='saveDraft'>
 							<span className='f-w fs-12'>Save as Draft</span>
 						</button>
 					</div>
 					<div className='text-center'>
-						<button className='btn btn-primary rounded-pill mx-2'>
+						<button
+							className='btn border border-0 rounded-pill mx-2'
+							id='markButton'>
 							<span className='f-w fs-12'>Save & Send</span>
 						</button>
 					</div>

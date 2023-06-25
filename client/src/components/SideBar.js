@@ -1,9 +1,12 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import Img from '../assets/images/image-avatar.jpg';
+import Sun from '../assets/images/icon-sun.svg';
+import Moon from '../assets/images/icon-moon.svg';
 
 function SideBar() {
+	const [theme, setTheme] = useState('light');
 	return (
-		<nav class='bg-dark d-flex sticky-top' id='sidebar'>
+		<nav class='d-flex sticky-top' id='sidebar'>
 			<div class='d-flex flex-lg-column flex-row align-items-center align-items-lg-start px-3 pt-2 text-white position-relative w-100'>
 				<div className='position-absolute start-0 top-0 d-flex flex-grow-1 justify-content-start mb-md-0 me-auto me-lg-0 w-100'>
 					<a
@@ -31,23 +34,30 @@ function SideBar() {
 				</div>
 				<div class='py-lg-4 mt-lg-auto ms-auto ms-lg-0 flex-shrink-1'>
 					<div className='d-flex flex-lg-column justify-content-evenly'>
-						<div className='col ms-2'>
+						<button
+							type='button'
+							className='bg-transparent border border-0 col ms-2 justify-content-center align-items-center d-flex pb-2 border'
+							id='sun-moon'
+							onClick={() =>
+								theme === 'light' ? setTheme('dark') : setTheme('light')
+							}>
 							<img
-								src={Img}
-								alt='hugenerd'
-								width='35'
-								height='35'
+								src={theme === 'light' ? Moon : Sun}
+								alt='sun-moon'
+								width='20'
+								height='20'
 								class='rounded-circle'
 							/>
-						</div>
+						</button>
 						<div className='col border border-lg-0 ms-lg-1 my-0 my-lg-3 mx-3 mx-lg-0'></div>
 						<div className='col ms-2'>
 							<img
 								src={Img}
 								alt='hugenerd'
-								width='35'
-								height='35'
+								width='40'
+								height='40'
 								class='rounded-circle'
+								id='avatar'
 							/>
 						</div>
 					</div>

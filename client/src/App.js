@@ -18,7 +18,7 @@ function App() {
 						class='col d-flex flex-column vh-90 position-relative'
 						style={{ backgroundColor: '#f8f8f8' }}>
 						<div className='row'>
-							<div className='col-md-1 col-lg-2'></div>
+							<div className='col-md-1 col-xl-2'></div>
 							<div className='col-md col-lg'>
 								<Router>
 									<Routes>
@@ -31,7 +31,7 @@ function App() {
 									</Routes>
 								</Router>
 							</div>
-							<div className='col-md-1 col-lg-2'></div>
+							<div className='col-md-1 col-xl-2'></div>
 						</div>
 					</div>
 				</div>

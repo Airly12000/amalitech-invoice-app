@@ -1,237 +1,375 @@
 #sidebar {
-  z-index: 1051;
-  height: 78px;
-  width: 100%;
-  border-radius: 0 0 0 0;
+	z-index: 1051;
+	height: 73px;
+	width: 100%;
+	border-radius: 0 0 0 0;
+	background-color: hsl(231, 20%, 27%);
 }
 
 #logo {
-  width: 78px;
-  height: 82px;
-  margin-left: -12px;
-  border-radius: 0 20px 20px 0;
-  background-color: rgb(124, 93, 250);
+	width: 78px;
+	height: 73px;
+	margin-left: -12px;
+	border-radius: 0 20px 20px 0;
+	background-color: rgb(124, 93, 250);
 }
 
 #logo .c1 {
-  background-color: rgb(124, 93, 250);
-  border-radius: 0 20px 0 0;
+	background-color: rgb(124, 93, 250);
+	border-radius: 0 20px 0 0;
 }
 
 #logo .c2 {
-  background-color: rgb(146, 119, 255);
-  border-radius: 20px 0 20px 0;
+	background-color: rgb(146, 119, 255);
+	border-radius: 20px 0 20px 0;
 }
 
+#avatar {
+	height: 32px;
+	width: 32px;
+}
 
 @media (min-width: 992px) {
-  #sidebar {
-    height: 100vh;
-    width: 100px;
-    border-radius: 0 20px 20px 0;
-  }
+	#sidebar {
+		height: 100vh;
+		width: 103px;
+		border-radius: 0 20px 20px 0;
+	}
 
-  #logo {
-    min-width: 100px;
-    height: 100px;
-    margin-left: -12px;
-  }
+	#logo {
+		min-width: 103px;
+		height: 103px;
+		margin-left: -12px;
+	}
+
+	#avatar {
+		height: 40px;
+		width: 40px;
+	}
 }
 
 .w-100 {
-  width: 100%;
+	width: 100%;
 }
 
 .newB {
-  display: grid;
-  gap: 5px;
-  grid-template-columns: auto auto;
-  height: 48px;
-  background-color: rgb(124, 93, 250);
-  color: white;
-  border: transparent;
-  transition: background-color 0.75s ease;
+	display: grid;
+	gap: 5px;
+	grid-template-columns: auto auto;
+	height: 48px;
+	background-color: rgb(124, 93, 250);
+	color: white;
+	border: transparent;
+	transition: background-color 0.75s ease;
 }
 
 .newB:hover {
-  background-color: rgb(146, 119, 255);
+	background-color: rgb(146, 119, 255);
 }
 
 .newB .plus {
-  background-color: white;
-  color: rgb(124, 93, 250);
-  height: 30px;
-  width: 30px;
-  font-size: 1.5rem;
+	background-color: white;
+	color: rgb(124, 93, 250);
+	height: 30px;
+	width: 30px;
+	font-size: 1.5rem;
 }
 
 .newB .text {
-  font-size: 12px;
-  font-weight: bolder;
+	font-size: 12px;
+	font-weight: bolder;
 }
 
 .f-w {
-  font-weight: bold;
+	font-weight: bold;
 }
 
 .fs-12 {
-  font-size: 12px;
+	font-size: 12px;
 }
 
-.card-hover {
+/* .card-hover {
   transition: border 0.75s ease;
 }
 
 .card-hover:hover {
   border: solid 1px rgb(118, 79, 224);
-}
+} */
 
-.invoice {
-  text-decoration: none;
+#invoice {
+	text-decoration: none;
 }
 
 #invoiceCard {
-  height: 150px;
+	border-color: transparent;
+	transition: border 0.75s ease;
+	height: 150px;
+}
+
+#invoiceCard:hover {
+	border: solid 1px rgb(118, 79, 224);
 }
 
 @media (min-width: 768px) {
-  #invoiceCard {
-    height: 90px;
-  }
+	#invoiceCard {
+		height: 75px;
+	}
 }
 
-.fs-18 {
-  font-size: 18px;
+.fs-16 {
+	font-size: 16px;
 }
 
 .f-w-900 {
-  font-weight: 900;
+	font-weight: 900;
 }
 
 .card {
-  box-shadow: 0 4px 4px #dfe3fa;
+	box-shadow: 0 3px 8px #dfe3fa;
 }
 
 .pendingButton {
-  color: rgb(241, 157, 0);
-  background-color: rgb(238, 224, 198);
-  width: 85px;
-  height: 38px;
+	color: hsl(34, 100%, 50%);
+	background-color: hsla(34, 100%, 50%, 5.71%);
+	width: 85px;
+	height: 38px;
 }
 
 .pId {
-   position: absolute;
-   top: 1.5rem;
-   left: 0;
+	position: absolute;
+	top: 1.5rem;
+	left: 0;
 }
 
 .pName {
-  position: absolute;
-  top: 1.5rem;
-  right: 0;
+	position: absolute;
+	top: 1.5rem;
+	right: 0;
 }
 
 .pPrice {
-  position: absolute;
-  bottom: 1.5rem;
-  left: 0;
+	position: absolute;
+	bottom: 1.5rem;
+	left: 0;
 }
 
 .pStatus {
-  position: absolute;
-  bottom: 1.5rem;
-  right: 0;
+	position: absolute;
+	bottom: 1.5rem;
+	right: 0;
 }
 
 @media (min-width: 768px) {
-  .pId {
-    position: relative;
-    top: auto;
-    left: auto;
- }
- 
- .pName {
-   position: relative;
-   top: auto;
-    right: 0;
- }
- 
- .pPrice {
-   position: relative;
-   bottom: auto;
-    left: auto;
- }
- 
- .pStatus {
-   position: relative;
-   bottom: auto;
-    right: auto;
- }
+	.pId {
+		position: relative;
+		top: auto;
+		left: auto;
+	}
+
+	.pName {
+		position: relative;
+		top: auto;
+		right: 0;
+	}
+
+	.pPrice {
+		position: relative;
+		bottom: auto;
+		left: auto;
+	}
+
+	.pStatus {
+		position: relative;
+		bottom: auto;
+		right: auto;
+	}
 }
 
 .goBack {
-  text-decoration: none;
-  color: black;
-  transition: color 0.75s ease;
+	text-decoration: none;
+	color: black;
+	transition: color 0.75s ease;
 }
 
 .goBack:hover {
-  color: rgb(146, 119, 255);
+	color: rgb(146, 119, 255);
 }
 
 .goBack .gb-i {
-  transition: margin-left 0.5s ease;
+	transition: margin-left 0.5s ease;
 }
 
 .goBack:hover .gb-i {
-  margin-left: -3px;
+	margin-left: -3px;
 }
 
 #items {
-  box-shadow: none;
-  width: 100%;
+	box-shadow: none;
+	width: 100%;
+	background-color: hsl(231, 67%, 99%);
+}
+
+#divAmtDue {
+	background-color: hsl(231, 20%, 27%);
 }
 
 .col-white {
-  color: white;
+	color: white;
+}
+
+.col-black {
+	color: black;
 }
 
 #itemTable {
-  background-color: rgba(0, 0, 0, 0) !important;
+	background-color: rgba(0, 0, 0, 0) !important;
 }
 
 .vh-90 {
-  min-height: 90vh;
+	min-height: 90vh;
 }
 
 #offcanvasExample {
-  left: 0;
-  top: 78px;
-  width: 100%;
-  border-radius: 0;
-  border: none;
+	left: 0;
+	top: 74px;
+	width: 100%;
+	border-radius: 0;
+	border: none;
+}
+
+#canvasFooter {
+	width: 100vw;
+	left: 0;
+	position: absolute;
+	border-radius: 0;
+}
+
+.mb-16 {
+	margin-bottom: 16rex;
 }
 
 @media (min-width: 992px) {
-  #offcanvasExample {
-    left: 85px;
-    top: 0;
-  }
+	#offcanvasExample {
+		left: 90px;
+		top: 0;
+	}
 }
 
 @media (min-width: 768px) {
-  #offcanvasExample {
-    width: 600px;
-    border-radius: 0 25px 25px 0;
-  }
+	#offcanvasExample {
+		width: 600px;
+		border-radius: 0 25px 25px 0;
+	}
+
+	#canvasFooter {
+		width: 600px;
+		border-radius: 0 20px 20px 0;
+	}
 }
 
 input::placeholder {
-  font-size: 12px;
-  font-weight: bold;
+	font-size: 12px;
+	font-weight: bold;
 }
 
-#senderCity, #senderStreetAddress, #senderPostCode, #senderCountry, #clientName, #clientEmail, #clientCity, #clientStreetAddress, #clientPostCode, #clientCountry, #invoiceDate, #paymentTerms, #projectDescription, #itemName, #itemQty, #itemPrice, #itemTotal {
-  font-size: 12px;
-  font-weight: bold;
+#senderCity,
+#senderStreetAddress,
+#senderPostCode,
+#senderCountry,
+#clientName,
+#clientEmail,
+#clientCity,
+#clientStreetAddress,
+#clientPostCode,
+#clientCountry,
+#invoiceDate,
+#paymentTerms,
+#projectDescription,
+#itemName,
+#itemQty,
+#itemPrice,
+#itemTotal {
+	font-size: 12px;
+	font-weight: bold;
+}
+
+.priceFont {
+	font-weight: 700;
+	font-size: 1rem;
+	color: hsl(231, 28%, 7%);
+}
+
+.bg-footer {
+	background-color: white;
+}
+
+#addItem {
+	background-color: hsl(231, 67%, 99%);
+	color: hsl(231, 20%, 61%);
+	font-size: 0.75rem;
+	padding: 17px 24px 16px 24px;
+}
+
+#addItem:hover {
+	background-color: hsl(231, 73%, 93%);
+}
+
+#deleteButton {
+	background-color: hsl(0, 80%, 63%);
+	color: white;
+	font-size: 0.75rem;
+	padding: 17px 24px 16px 24px;
+}
+
+#deleteButton:hover {
+	background-color: hsl(0, 100%, 80%);
+}
+
+#editButton {
+	background-color: hsl(231, 67%, 99%);
+	color: hsl(231, 20%, 61%);
+	font-size: 0.75rem;
+	padding: 17px 24px 16px 24px;
+}
+
+#editButton:hover {
+	background-color: hsl(231, 73%, 93%);
+}
+
+#markButton {
+	background-color: hsl(252, 94%, 67%);
+	color: white;
+	font-size: 0.75rem;
+	padding: 17px 24px 16px 24px;
+}
+
+#markButton:hover {
+	background-color: hsl(252, 100%, 73%);
+}
+
+#saveDraft {
+	background-color: hsl(233, 30%, 21%);
+	color: hsl(231, 20%, 61%);
+	font-size: 0.75rem;
+	padding: 17px 24px 16px 24px;
+}
+
+#saveDraft:hover {
+	background-color: hsl(228, 29%, 7%);
+}
+
+.text-color {
+	color: hsl(231, 20%, 61%);
+}
+
+.col-purple {
+	color: hsl(252, 94%, 67%);
+}
+
+#sun-moon:hover {
+	cursor: pointer;
+}
+
+#sun-moon:hover img {
+	color: white;
 }
