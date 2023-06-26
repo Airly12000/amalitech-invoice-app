@@ -135,6 +135,20 @@
 	height: 38px;
 }
 
+.paidButton {
+	background-color: hsla(160, 67%, 52%, 5.71%);
+	color: hsl(160, 67%, 52%);
+	width: 85px;
+	height: 38px;
+}
+
+.draftButton {
+	background-color: hsla(231, 20%, 27%, 5.71%);
+	color: hsl(231, 20%, 27%);
+	width: 85px;
+	height: 38px;
+}
+
 .pId {
 	position: absolute;
 	top: 1.5rem;
@@ -366,6 +380,10 @@ input::placeholder {
 	color: hsl(252, 94%, 67%);
 }
 
+#sun-moon {
+	z-index: 1052;
+}
+
 #sun-moon:hover {
 	cursor: pointer;
 }
@@ -433,6 +451,22 @@ input::placeholder {
 #inputs::-webkit-scrollbar-thumb {
 	background: hsl(231, 67%, 93%);
 	border-radius: 5px;
+}
+
+#myModal {
+	border: transparent;
+}
+
+.variant {
+	margin-top: -15px;
+}
+
+.variant1 {
+	margin-bottom: -20px;
+}
+
+.space {
+	color: hsl(0, 80%, 63%);
 }
 
 body[theme='light'] {
@@ -505,6 +539,10 @@ body[theme='light'] {
 
 	#inputs::-webkit-scrollbar-thumb {
 		background: hsl(231, 67%, 93%);
+	}
+
+	#myModal {
+		background-color: white;
 	}
 }
 
@@ -604,5 +642,18 @@ body[theme='dark'] {
 
 	#variant #editButton:hover {
 		background-color: hsl(233, 30%, 21%);
+	}
+
+	.variant #editButton:hover {
+		background-color: hsl(233, 30%, 21%);
+	}
+
+	.draftButton {
+		background-color: hsla(231, 75%, 93%, 5.71%);
+		color: hsl(231, 75%, 93%);
+	}
+
+	#myModal {
+		background-color: hsl(233, 31%, 17%);
 	}
 }

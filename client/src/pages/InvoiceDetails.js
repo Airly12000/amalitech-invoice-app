@@ -1,8 +1,61 @@
-import React from 'react';
+import React, { useEffect, useState, useContext } from 'react';
+import { useParams } from 'react-router-dom';
+import InvoiceList from '../data/data.json';
+import { getDate, statusButton, capitalize } from '../components/Utilities';
+import ValidationModal from '../components/ValidationModal';
+import { Context } from '../App';
 
 function InvoiceDetails() {
+	const { id } = useParams('id');
+	const [inv] = InvoiceList.filter((invoice) => invoice.id === id);
+	const [invoice, setInvoice] = useState(inv);
+	const [openModal, setOpenModal] = useState(false);
+	const {
+		modalTitle,
+		modalBody,
+		modalButton,
+		setModalTitle,
+		setModalBody,
+		setModalButton,
+	} = useContext(Context);
+
+	const handleSubmit = () => {
+		console.log('Hi');
+	};
+
+	const handleDelete = () => {
+		setModalTitle('Confirm Deletion');
+		setModalBody(
+			`Are you sure you want to delete invoice #${id}? This action cannot be undone.`
+		);
+		setModalButton('deleteButton');
+		setOpenModal(true);
+	};
+
+	const handleMark = () => {
+		setModalTitle('Confirm Status');
+		setModalBody(
+			`Are you sure you want to change status of invoice #${id}? This action cannot be undone.`
+		);
+		setModalButton('markButton');
+		setOpenModal(true);
+	};
+
+	// useEffect(() => {
+	// 	const [inv] = InvoiceList.filter((invoice) => invoice.id === id);
+	// 	setInvoice(inv[0]);
+	// }, [id]);
+
 	return (
-		<div class='col row overflow-auto mt-lg-4x'>
+		<div className='col row overflow-auto mt-lg-4x'>
+			<ValidationModal
+				openModal={openModal}
+				setOpenModal={setOpenModal}
+				modalTitle={modalTitle}
+				modalBody={modalBody}
+				modalButton={modalButton}
+				handleSubmit={handleSubmit}
+			/>
 			<div className='col pt-4 m-3'>
 				<a href='/' className='goBack'>
 					<svg
@@ -25,31 +78,44 @@ function InvoiceDetails() {
 					id='topDetails'>
 					<div className='d-flex flex-row align-items-center justify-content-start flex-grow-1'>
 						<span className='me-auto me-md-3 text-color'>Status</span>
-						<span className='d-flex flex-row align-items-center justify-content-center rounded border border-0 pendingButton'>
+						<span
+							className={
+								'd-flex flex-row align-items-center justify-content-center rounded border border-0 ' +
+								statusButton(invoice.status)
+							}>
 							<i
 								className='bi bi-circle-fill pe-1'
 								style={{
 									fontSize: 0.5 + 'rem',
 								}}></i>
-							<span className='fs-12 f-w'>Pending</span>
+							<span className='fs-12 f-w'>{capitalize(invoice.status)}</span>
 						</span>
 					</div>
 					<div className='d-none d-md-block' id='variant'>
-						<button
-							className='btn btn-secondary border border-0 rounded-pill mx-1'
-							id='editButton'>
-							<span className='f-w fs-12'>Edit</span>
-						</button>
+						{invoice.status !== 'paid' && (
+							<button
+								className='btn btn-secondary border border-0 rounded-pill mx-1'
+								data-bs-toggle='offcanvas'
+								data-bs-target='#offcanvasExample'
+								aria-controls='offcanvasExample'
+								id='editButton'>
+								<span className='f-w fs-12'>Edit</span>
+							</button>
+						)}
 						<button
 							className='btn btn-danger border border-0 rounded-pill mx-1'
-							id='deleteButton'>
+							id='deleteButton'
+							onClick={handleDelete}>
 							<span className='f-w fs-12'>Delete</span>
 						</button>
-						<button
-							className='btn btn-primary border border-0 rounded-pill mx-1'
-							id='markButton'>
-							<span className='f-w fs-12'>Mark as Paid</span>
-						</button>
+						{invoice.status === 'pending' && (
+							<button
+								className='btn btn-primary border border-0 rounded-pill mx-1'
+								id='markButton'
+								onClick={handleMark}>
+								<span className='f-w fs-12'>Mark as Paid</span>
+							</button>
+						)}
 					</div>
 				</div>
 				<div
@@ -58,15 +124,16 @@ function InvoiceDetails() {
 					<div className='d-flex flex-column flex-md-row w-100 mb-3'>
 						<div className='flex-grow-1 mb-3 mb-md-0'>
 							<div className='col col-black'>
-								<span className='text-color'>#</span>RJ1234
+								<span className='text-color'>#</span>
+								{invoice.id}
 							</div>
-							<div className='col text-color'>Graphic Design</div>
+							<div className='col text-color'>{invoice.description}</div>
 						</div>
 						<div className='flex-shrink-1 text-start text-md-end text-color'>
-							<div className='col'>Airly</div>
-							<div className='col'>Washington</div>
-							<div className='col'>Hi there</div>
-							<div className='col'>Bye bye</div>
+							<div className='col'>{invoice.senderAddress.street}</div>
+							<div className='col'>{invoice.senderAddress.city}</div>
+							<div className='col'>{invoice.senderAddress.postCode}</div>
+							<div className='col'>{invoice.senderAddress.country}</div>
 						</div>
 					</div>
 					<div className='d-flex flex-column flex-md-row w-100'>
@@ -74,23 +141,29 @@ function InvoiceDetails() {
 							<div className='d-flex flex-fill flex-column'>
 								<div className='col mb-4'>
 									<div className='col text-color'>Invoice Date</div>
-									<div className='col col-black'>21 August 2021</div>
+									<div className='col col-black'>
+										{getDate(invoice.createdAt)}
+									</div>
 								</div>
 								<div className='col'>
 									<div className='col text-color'>Payment Due</div>
-									<div className='col col-black'>21 September 2021</div>
+									<div className='col col-black'>
+										{getDate(invoice.paymentDue)}
+									</div>
 								</div>
 							</div>
 							<div className='flex-fill text-color'>
 								<div className='col'>Bill to</div>
-								<div className='col col-black'>Francis Junior</div>
-								<div className='col'>Francis Junior</div>
-								<div className='col'>Francis Junior</div>
+								<div className='col col-black'>{invoice.clientName}</div>
+								<div className='col'>{invoice.clientAddress.street}</div>
+								<div className='col'>{invoice.clientAddress.city}</div>
+								<div className='col'>{invoice.clientAddress.postCode}</div>
+								<div className='col'>{invoice.clientAddress.country}</div>
 							</div>
 						</div>
 						<div className='flex-grow-1'>
 							<div className='col text-color'>Sent to</div>
-							<div className='col col-black'>littlefrancis28@gmail.com</div>
+							<div className='col col-black'>{invoice.clientEmail}</div>
 						</div>
 					</div>
 					<div
@@ -105,28 +178,36 @@ function InvoiceDetails() {
 								</div>
 								<div className='col col-md-3 text-end'>Total</div>
 							</div>
-							<div className='d-flex mb-3'>
-								<div className='col col-md-5 d-flex flex-column col-black'>
-									<span>Mango </span>
-									<span className='d-block d-md-none mt-2 text-color'>
-										5 x $ 4.00
-									</span>
-								</div>
-								<div className='col d-none d-md-flex flex-row text-color'>
-									<div className='col text-center'>5</div>
-									<div className='col text-end'>$ 4.00</div>
-								</div>
-								<div className='col col-md-3 text-end align-self-center col-black'>
-									$ 20.00
-								</div>
-							</div>
+							{invoice.items.map((item, index) => {
+								return (
+									<div className='d-flex mb-3' key={index}>
+										<div className='col col-md-5 d-flex flex-column col-black'>
+											<span>{item.name} </span>
+											<span className='d-block d-md-none mt-2 text-color'>
+												{item.quantity} x $ {item.price.toFixed(2)}
+											</span>
+										</div>
+										<div className='col d-none d-md-flex flex-row text-color'>
+											<div className='col text-center'>{item.quantity}</div>
+											<div className='col text-end'>
+												$ {item.price.toFixed(2)}
+											</div>
+										</div>
+										<div className='col col-md-3 text-end align-self-center col-black'>
+											$ {item.total.toFixed(2)}
+										</div>
+									</div>
+								);
+							})}
 						</div>
 						<div
 							className='d-flex flex-row rounded-bottom py-4 px-5 w-100'
 							id='divAmtDue'
 							style={{ color: 'white' }}>
 							<div className='flex-grow-1'>Amount Due</div>
-							<div className='flex-fill text-end'>$ 1234.00</div>
+							<div className='flex-fill text-end'>
+								$ {invoice.total.toFixed(2)}
+							</div>
 						</div>
 					</div>
 				</div>
@@ -135,27 +216,36 @@ function InvoiceDetails() {
 				className='nav sticky-bottom d-flex d-md-none py-4 px-3 bg-footer'
 				id='foot'>
 				<div className='d-flex flex-row w-100 justify-content-center'>
-					<div className='text-center' id='variant'>
-						<button
-							className='btn btn-secondary border border-0 rounded-pill mx-1'
-							id='editButton'>
-							<span className='f-w fs-12'>Edit</span>
-						</button>
-					</div>
+					{invoice.status !== 'paid' && (
+						<div className='text-center' id='variant'>
+							<button
+								className='btn btn-secondary border border-0 rounded-pill mx-1'
+								data-bs-toggle='offcanvas'
+								data-bs-target='#offcanvasExample'
+								aria-controls='offcanvasExample'
+								id='editButton'>
+								<span className='f-w fs-12'>Edit</span>
+							</button>
+						</div>
+					)}
 					<div className='text-center'>
 						<button
 							className='btn btn-danger border border-0 rounded-pill mx-1'
+							onClick={handleDelete}
 							id='deleteButton'>
 							<span className='f-w fs-12'>Delete</span>
 						</button>
 					</div>
-					<div className='text-center'>
-						<button
-							className='btn btn-primary border border-0 rounded-pill mx-1'
-							id='markButton'>
-							<span className='f-w fs-12'>Mark as Paid</span>
-						</button>
-					</div>
+					{invoice.status === 'pending' && (
+						<div className='text-center'>
+							<button
+								className='btn btn-primary border border-0 rounded-pill mx-1'
+								onClick={handleMark}
+								id='markButton'>
+								<span className='f-w fs-12'>Mark as Paid</span>
+							</button>
+						</div>
+					)}
 				</div>
 			</nav>
 		</div>
