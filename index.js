@@ -20,10 +20,7 @@ const pathResolve = (req, res) => {
 
 // React App Routes
 app.get('/', pathResolve);
-app.get('/about', pathResolve);
-app.get('/invoices', pathResolve);
-app.get('/invoice/:invoiceId', pathResolve);
-app.get('/edit/:invoiceId', pathResolve);
+app.get('/invoice/:id', pathResolve);
 app.get('*', pathResolve);
 
 const PORT = process.env.PORT || 5000;

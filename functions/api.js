@@ -1,7 +1,7 @@
 const express = require('express');
 const cors = require('cors');
 const serverless = require('serverless-http');
-const Invoices = require('../routes/Invoices');
+const Invoices = require('../api/routes/Invoices');
 const mysql = require('mysql2');
 const path = require('path');
 require('dotenv').config({ path: path.join(__dirname, '../', '.env') });
