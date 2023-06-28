@@ -1,15 +1,16 @@
 import React, { useEffect, useState, useContext } from 'react';
 import { useParams } from 'react-router-dom';
-import InvoiceList from '../data/data.json';
 import { getDate, statusButton, capitalize } from '../components/Utilities';
 import ValidationModal from '../components/ValidationModal';
 import { Context } from '../App';
+import axios from 'axios';
+import EditInvoiceCanvas from '../components/EditInvoiceCanvas';
 
 function InvoiceDetails() {
 	const { id } = useParams('id');
-	const [inv] = InvoiceList.filter((invoice) => invoice.id === id);
-	const [invoice, setInvoice] = useState(inv);
+	const [invoice, setInvoice] = useState(undefined);
 	const [openModal, setOpenModal] = useState(false);
+	const [isLoading, setIsLoading] = useState(true);
 	const {
 		modalTitle,
 		modalBody,
@@ -19,9 +20,20 @@ function InvoiceDetails() {
 		setModalButton,
 	} = useContext(Context);
 
-	const handleSubmit = () => {
-		console.log('Hi');
-	};
+	useEffect(() => {
+		if (invoice === undefined) {
+			axios
+				.get('/api/routes/getInvoiceItems/' + id)
+				.then((response) => {
+					setInvoice(response.data.invoice[0]);
+					// console.log(response.data.invoice[0]);
+				})
+				.catch((error) => console.log(`Error: ${error}`));
+		}
+		setTimeout(() => {
+			setIsLoading(false);
+		}, 500);
+	});
 
 	const handleDelete = () => {
 		setModalTitle('Confirm Deletion');
@@ -41,10 +53,50 @@ function InvoiceDetails() {
 		setOpenModal(true);
 	};
 
-	// useEffect(() => {
-	// 	const [inv] = InvoiceList.filter((invoice) => invoice.id === id);
-	// 	setInvoice(inv[0]);
-	// }, [id]);
+	const handleSubmit = async () => {
+		if (modalButton === 'markButton') {
+			await axios
+				.put('/api/routes/markPaid/' + id)
+				.then((response) => {
+					console.log(response.data);
+				})
+				.catch((error) => console.log(`Error: ${error}`));
+			window.location.reload();
+		} else if (modalButton === 'deleteButton') {
+			await axios
+				.delete('/api/routes/deleteInvoice/' + id)
+				.then((response) => {
+					console.log(response.data);
+				})
+				.catch((error) => console.log(`Error: ${error}`));
+			window.location.replace('/');
+		}
+	};
+
+	if (isLoading) {
+		return (
+			<div className='col row overflow-auto mt-lg-4x'>
+				<div className='col pt-4 m-3'>
+					<a href='/' className='goBack'>
+						<svg
+							className='gb-i'
+							color='hsl(252, 94%, 67%)'
+							viewBox='0 0 1024 1024'
+							style={{
+								display: 'inline-block',
+								stroke: 'currentcolor',
+								fill: 'currentcolor',
+								width: 10 + 'px',
+								height: 10 + 'px',
+							}}>
+							<path d='M730.6 18.4l-505.4 505.2 505.4 505.4 144.8-144.8-360.6-360.6 360.6-360.4z'></path>
+						</svg>
+						<span className='f-w fs-12 ms-4 col-black'>Go back</span>
+					</a>
+				</div>
+			</div>
+		);
+	}
 
 	return (
 		<div className='col row overflow-auto mt-lg-4x'>
@@ -56,6 +108,7 @@ function InvoiceDetails() {
 				modalButton={modalButton}
 				handleSubmit={handleSubmit}
 			/>
+			<EditInvoiceCanvas inv={invoice} />
 			<div className='col pt-4 m-3'>
 				<a href='/' className='goBack'>
 					<svg
@@ -74,7 +127,7 @@ function InvoiceDetails() {
 					<span className='f-w fs-12 ms-4 col-black'>Go back</span>
 				</a>
 				<div
-					className='d-flex flex-row card my-4 border border-0 py-4 px-4 f-w fs-12'
+					className='d-flex flex-row card my-4 border border-0 py-4 px-4 f-w fs-12 animate-other'
 					id='topDetails'>
 					<div className='d-flex flex-row align-items-center justify-content-start flex-grow-1'>
 						<span className='me-auto me-md-3 text-color'>Status</span>
@@ -119,7 +172,7 @@ function InvoiceDetails() {
 					</div>
 				</div>
 				<div
-					className='d-flex flex-column card my-4 border border-0 py-3 pt-5 px-5 f-w fs-12'
+					className='d-flex flex-column card my-4 border border-0 py-3 pt-5 px-5 f-w fs-12 animate-other'
 					id='mainDetails'>
 					<div className='d-flex flex-column flex-md-row w-100 mb-3'>
 						<div className='flex-grow-1 mb-3 mb-md-0'>
@@ -127,13 +180,23 @@ function InvoiceDetails() {
 								<span className='text-color'>#</span>
 								{invoice.id}
 							</div>
-							<div className='col text-color'>{invoice.description}</div>
+							<div className='col text-color'>
+								{invoice.description ? invoice.description : ''}
+							</div>
 						</div>
 						<div className='flex-shrink-1 text-start text-md-end text-color'>
-							<div className='col'>{invoice.senderAddress.street}</div>
-							<div className='col'>{invoice.senderAddress.city}</div>
-							<div className='col'>{invoice.senderAddress.postCode}</div>
-							<div className='col'>{invoice.senderAddress.country}</div>
+							<div className='col'>
+								{invoice.senderAddress ? invoice.senderAddress.street : ''}
+							</div>
+							<div className='col'>
+								{invoice.senderAddress ? invoice.senderAddress.city : ''}
+							</div>
+							<div className='col'>
+								{invoice.senderAddress ? invoice.senderAddress.postCode : ''}
+							</div>
+							<div className='col'>
+								{invoice.senderAddress ? invoice.senderAddress.country : ''}
+							</div>
 						</div>
 					</div>
 					<div className='d-flex flex-column flex-md-row w-100'>
@@ -155,15 +218,25 @@ function InvoiceDetails() {
 							<div className='flex-fill text-color'>
 								<div className='col'>Bill to</div>
 								<div className='col col-black'>{invoice.clientName}</div>
-								<div className='col'>{invoice.clientAddress.street}</div>
-								<div className='col'>{invoice.clientAddress.city}</div>
-								<div className='col'>{invoice.clientAddress.postCode}</div>
-								<div className='col'>{invoice.clientAddress.country}</div>
+								<div className='col'>
+									{invoice.clientAddress ? invoice.clientAddress.street : ''}
+								</div>
+								<div className='col'>
+									{invoice.clientAddress ? invoice.clientAddress.city : ''}
+								</div>
+								<div className='col'>
+									{invoice.clientAddress ? invoice.clientAddress.postCode : ''}
+								</div>
+								<div className='col'>
+									{invoice.clientAddress ? invoice.clientAddress.country : ''}
+								</div>
 							</div>
 						</div>
 						<div className='flex-grow-1'>
 							<div className='col text-color'>Sent to</div>
-							<div className='col col-black'>{invoice.clientEmail}</div>
+							<div className='col col-black'>
+								{invoice.clientEmail ? invoice.clientEmail : ''}
+							</div>
 						</div>
 					</div>
 					<div
@@ -178,27 +251,28 @@ function InvoiceDetails() {
 								</div>
 								<div className='col col-md-3 text-end'>Total</div>
 							</div>
-							{invoice.items.map((item, index) => {
-								return (
-									<div className='d-flex mb-3' key={index}>
-										<div className='col col-md-5 d-flex flex-column col-black'>
-											<span>{item.name} </span>
-											<span className='d-block d-md-none mt-2 text-color'>
-												{item.quantity} x $ {item.price.toFixed(2)}
-											</span>
-										</div>
-										<div className='col d-none d-md-flex flex-row text-color'>
-											<div className='col text-center'>{item.quantity}</div>
-											<div className='col text-end'>
-												$ {item.price.toFixed(2)}
+							{invoice.items.length !== 0 &&
+								invoice.items.map((item, index) => {
+									return (
+										<div className='d-flex mb-3' key={index}>
+											<div className='col col-md-5 d-flex flex-column col-black'>
+												<span>{item.name} </span>
+												<span className='d-block d-md-none mt-2 text-color'>
+													{item.quantity} x $ {item.price.toFixed(2)}
+												</span>
+											</div>
+											<div className='col d-none d-md-flex flex-row text-color'>
+												<div className='col text-center'>{item.quantity}</div>
+												<div className='col text-end'>
+													$ {item.price.toFixed(2)}
+												</div>
+											</div>
+											<div className='col col-md-3 text-end align-self-center col-black'>
+												$ {item.total.toFixed(2)}
 											</div>
 										</div>
-										<div className='col col-md-3 text-end align-self-center col-black'>
-											$ {item.total.toFixed(2)}
-										</div>
-									</div>
-								);
-							})}
+									);
+								})}
 						</div>
 						<div
 							className='d-flex flex-row rounded-bottom py-4 px-5 w-100'
@@ -206,7 +280,10 @@ function InvoiceDetails() {
 							style={{ color: 'white' }}>
 							<div className='flex-grow-1'>Amount Due</div>
 							<div className='flex-fill text-end'>
-								$ {invoice.total.toFixed(2)}
+								${' '}
+								{invoice.total !== undefined
+									? invoice.total.toFixed(2)
+									: '0.00'}
 							</div>
 						</div>
 					</div>

@@ -6,19 +6,16 @@ import {
 	validateItems,
 	validateItemName,
 	createInvoiceObject,
-	createID,
 } from './Utilities';
 import axios from 'axios';
 
-const today = new Date();
-
-function InvoiceCanvas() {
-	const [items, setItems] = useState([]);
-	const [senderAddress, setSenderAddress] = useState({});
-	const [clientAddress, setClientAddress] = useState({});
-	const [invoice, setInvoice] = useState({ id: createID() });
+function EditInvoiceCanvas({ inv }) {
+	const [items, setItems] = useState(inv.items);
+	const [senderAddress, setSenderAddress] = useState(inv.senderAddress);
+	const [clientAddress, setClientAddress] = useState(inv.clientAddress);
+	const [invoice, setInvoice] = useState(inv);
+	const [date, setDate] = useState(inv.createdAt);
 	const [show, setShow] = useState(false);
-	const [date, setDate] = useState('');
 
 	const handleAddItem = () => {
 		setItems([...items, { quantity: 0, price: 0, total: 0 }]);
@@ -143,7 +140,7 @@ function InvoiceCanvas() {
 		}
 	};
 
-	const handleSubmit = async (event) => {
+	const handleUpdate = async (event) => {
 		event.preventDefault();
 		const total = items.reduce((a, v) => (a += v.total), 0);
 		const finalInvoice = createInvoiceObject({
@@ -158,33 +155,13 @@ function InvoiceCanvas() {
 		console.log(finalInvoice);
 		if (validateInvoice(finalInvoice) && validateItems(finalInvoice.items)) {
 			await axios
-				.post('/api/routes/post', finalInvoice)
+				.put('/api/routes/updateInvoice/' + inv.id, finalInvoice)
 				.then((response) => console.log(response.data))
 				.catch((error) => console.log(`error : ${error}`));
 			window.location.reload();
 		} else {
 			setShow(true);
 		}
-	};
-
-	const handleDraft = async (event) => {
-		event.preventDefault();
-		const total = items.reduce((a, v) => (a += v.total), 0);
-		const finalInvoice = createInvoiceObject({
-			...invoice,
-			senderAddress,
-			clientAddress,
-			items,
-			status: 'draft',
-			date: date,
-			total,
-		});
-		console.log(finalInvoice);
-		await axios
-			.post('/api/routes/post', finalInvoice)
-			.then((response) => console.log(response.data))
-			.catch((error) => console.log(`error : ${error}`));
-		window.location.reload();
 	};
 
 	return (
@@ -218,11 +195,12 @@ function InvoiceCanvas() {
 				<h5
 					className='offcanvas-title w-100 f-w pt-4 ps-3 mb-1 col-black'
 					id='offcanvasExampleLabel'>
-					New Invoice
+					Edit <span className='text-color'>#</span>
+					{invoice.id}
 				</h5>
 			</nav>
 			<div className='offcanvas-body mt-2 fs-12 mb-16 text-color' id='inputs'>
-				<form className='d-flex flex-column' noValidate>
+				<form className='d-flex flex-column'>
 					<div className='sender d-flex flex-column'>
 						<span className='mb-3 col-purple'>Bill from</span>
 						<div className='mb-3'>
@@ -239,10 +217,10 @@ function InvoiceCanvas() {
 							<input
 								type='text'
 								className='form-control py-3 px-4'
+								value={senderAddress ? senderAddress.street : ''}
 								onChange={handleChange}
 								name='senderStreetAddress'
 								id='senderStreetAddress'
-								required
 							/>
 						</div>
 						<div className='row mb-3'>
@@ -260,6 +238,7 @@ function InvoiceCanvas() {
 								<input
 									type='text'
 									className='form-control py-3 px-4'
+									value={senderAddress ? senderAddress.city : ''}
 									onChange={handleChange}
 									name='senderCity'
 									id='senderCity'
@@ -279,6 +258,7 @@ function InvoiceCanvas() {
 								<input
 									type='text'
 									className='form-control py-3 px-4'
+									value={senderAddress ? senderAddress.postCode : ''}
 									onChange={handleChange}
 									name='senderPostCode'
 									id='senderPostCode'
@@ -298,6 +278,7 @@ function InvoiceCanvas() {
 								<input
 									type='text'
 									className='form-control py-3 px-4'
+									value={senderAddress ? senderAddress.country : ''}
 									onChange={handleChange}
 									name='senderCountry'
 									id='senderCountry'
@@ -321,6 +302,7 @@ function InvoiceCanvas() {
 							<input
 								type='text'
 								className='form-control py-3 px-4'
+								value={invoice.clientName ? invoice.clientName : ''}
 								onChange={handleChange}
 								name='clientName'
 								id='clientName'
@@ -340,6 +322,7 @@ function InvoiceCanvas() {
 							<input
 								type='email'
 								className='form-control py-3 px-4'
+								value={invoice.clientEmail ? invoice.clientEmail : ''}
 								onChange={handleChange}
 								name='clientEmail'
 								id='clientEmail'
@@ -360,6 +343,7 @@ function InvoiceCanvas() {
 							<input
 								type='text'
 								className='form-control py-3 px-4'
+								value={clientAddress ? clientAddress.street : ''}
 								onChange={handleChange}
 								name='clientStreetAddress'
 								id='clientStreetAddress'
@@ -380,6 +364,7 @@ function InvoiceCanvas() {
 								<input
 									type='text'
 									className='form-control py-3 px-4'
+									value={clientAddress ? clientAddress.city : ''}
 									onChange={handleChange}
 									name='clientCity'
 									id='clientCity'
@@ -399,6 +384,7 @@ function InvoiceCanvas() {
 								<input
 									type='text'
 									className='form-control py-3 px-4'
+									value={clientAddress ? clientAddress.postCode : ''}
 									onChange={handleChange}
 									name='clientPostCode'
 									id='clientPostCode'
@@ -418,6 +404,7 @@ function InvoiceCanvas() {
 								<input
 									type='text'
 									className='form-control py-3 px-4'
+									value={clientAddress ? clientAddress.country : ''}
 									onChange={handleChange}
 									name='clientCountry'
 									id='clientCountry'
@@ -426,26 +413,27 @@ function InvoiceCanvas() {
 						</div>
 						<div className='row mb-3'>
 							<div className='col-md'>
-								<label htmlFor='' className='form-label'>
+								<label htmlFor='exampleInputEmail1' className='form-label'>
 									Invoice Date
 								</label>
 								<input
 									type='date'
 									className='form-control py-3 px-4'
+									value={invoice.createdAt}
 									onChange={handleChange}
-									value={formatDate(today)}
 									name='invoiceDate'
 									id='invoiceDate'
 								/>
 							</div>
 							<div className='col-md mt-3 mt-md-0'>
-								<label htmlFor='' className='form-label'>
+								<label htmlFor='exampleInputEmail1' className='form-label'>
 									Payment Terms
 								</label>
 								<select
 									className='form-select py-3 px-4'
 									aria-label='Default select example'
 									onChange={handleChange}
+									value={invoice.paymentTerms}
 									name='paymentTerms'
 									id='paymentTerms'>
 									<option value={1}>Net 1 Day</option>
@@ -472,6 +460,7 @@ function InvoiceCanvas() {
 								type='text'
 								placeholder='eg. Graphic Design'
 								className='form-control py-3 px-4'
+								value={invoice.description ? invoice.description : ''}
 								onChange={handleChange}
 								name='projectDescription'
 								id='projectDescription'
@@ -497,47 +486,49 @@ function InvoiceCanvas() {
 										<input
 											type='text'
 											className='form-control py-3 px-4'
+											value={item.name}
 											onChange={(event) => handleChange(event, index)}
 											name='itemName'
 											id='itemName'
 										/>
 									</div>
 									<div className='col'>
-										<label htmlFor='' className='form-label'>
+										<label htmlFor='exampleInputEmail1' className='form-label'>
 											Qty
 										</label>
 										<input
 											type='text'
 											className='form-control py-3 px-4 px-md-2'
-											defaultValue={0}
+											value={item.quantity}
 											onChange={(event) => handleChange(event, index)}
 											name='itemQty'
 											id='itemQty'
 										/>
 									</div>
 									<div className='col'>
-										<label htmlFor='' className='form-label'>
+										<label htmlFor='exampleInputEmail1' className='form-label'>
 											Price
 										</label>
 										<input
 											type='text'
 											className='form-control py-3 px-4 px-md-2'
-											defaultValue={0}
+											value={item.price}
 											onChange={(event) => handleChange(event, index)}
 											name='itemPrice'
 											id='itemPrice'
 										/>
 									</div>
 									<div className='col'>
-										<label htmlFor='' className='form-label'>
+										<label htmlFor='exampleInputEmail1' className='form-label'>
 											Total
 										</label>
 										<input
 											type='text'
-											className='form-control py-3 px-4 px-md-2 border border-0 bg-transparent'
+											className='form-control py-3 px-4 px-md-2 border border-0 bg-transparent w-100'
+											value={item.total}
 											name='itemTotal'
 											id='itemTotal'
-											value={item.total}
+											defaultValue='0'
 											disabled
 										/>
 									</div>
@@ -584,7 +575,8 @@ function InvoiceCanvas() {
 			</div>
 			<nav className='nav sticky-bottom d-flex py-4 px-4' id='canvasFooter'>
 				<div className='d-flex flex-row w-100 justify-content-center'>
-					<div className='text-center me-md-auto'>
+					<div className='text-center me-md-auto'></div>
+					<div className='text-center'>
 						<button
 							className='btn border border-0 rounded-pill mx-2'
 							data-bs-dismiss='offcanvas'
@@ -595,17 +587,8 @@ function InvoiceCanvas() {
 					</div>
 					<div className='text-center'>
 						<button
-							className='btn rounded-pill mx-2'
-							id='saveDraft'
-							onClick={handleDraft}>
-							<span className='f-w fs-12'>Save as Draft</span>
-						</button>
-					</div>
-					<div className='text-center'>
-						<button
-							type='submit'
 							className='btn border border-0 rounded-pill mx-2'
-							onClick={handleSubmit}
+							onClick={handleUpdate}
 							id='markButton'>
 							<span className='f-w fs-12'>Save & Send</span>
 						</button>
@@ -616,4 +599,4 @@ function InvoiceCanvas() {
 	);
 }
 
-export default InvoiceCanvas;
+export default EditInvoiceCanvas;
