@@ -639,7 +639,7 @@ body[theme='light'] {
 	#itemPrice,
 	#itemTotal {
 		background-color: #fff;
-		border: inherit hsl(231, 20%, 61%);
+		border: solid 1px hsl(231, 20%, 61%);
 		color: black;
 	}
 
