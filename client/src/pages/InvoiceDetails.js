@@ -32,7 +32,7 @@ function InvoiceDetails() {
 		}
 		setTimeout(() => {
 			setIsLoading(false);
-		}, 500);
+		}, 1000);
 	});
 
 	const handleDelete = () => {
